@@ -3,8 +3,13 @@ import React from "react";
 export const Todos = (props) => {
   const handleInputChange = (event) => {
     props.onChange(event.target.value);
-    value = { inputValue };
-    onKeyPress={(event) => event.keyCode == 13 ? setTask(task.concat(inputValue))}
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      props.onKeyPress(event.target.value);
+      props.onChange("");
+    }
   };
 
   return (
@@ -14,7 +19,9 @@ export const Todos = (props) => {
       </div>
       <form className="item-form">
         <input
+          value={props.inputValue}
           onChange={handleInputChange}
+          onKeyPress={handleKeyPress}
           type="text"
           className="form-input"
           id="item-input"
@@ -24,11 +31,7 @@ export const Todos = (props) => {
         />
       </form>
       <ul className="items">
-        <li>{props.newInput}</li>
-        <li>Take out the trash</li>
-        <li>Go to the Gym</li>
-        <li>Study</li>
-        <li>Walk the dog</li>
+        {props.inputValue && <li>{props.inputValue}</li>}
       </ul>
     </div>
   );
