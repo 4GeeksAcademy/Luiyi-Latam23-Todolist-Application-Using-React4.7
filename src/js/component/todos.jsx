@@ -1,6 +1,12 @@
 import React from "react";
 
-export const Todos = () => {
+export const Todos = (props) => {
+  const handleInputChange = (event) => {
+    props.onChange(event.target.value);
+    value = { inputValue };
+    onKeyPress={(event) => event.keyCode == 13 ? setTask(task.concat(inputValue))}
+  };
+
   return (
     <div className="container">
       <div>
@@ -8,6 +14,7 @@ export const Todos = () => {
       </div>
       <form className="item-form">
         <input
+          onChange={handleInputChange}
           type="text"
           className="form-input"
           id="item-input"
@@ -17,7 +24,7 @@ export const Todos = () => {
         />
       </form>
       <ul className="items">
-        <li>Make the bed</li>
+        <li>{props.newInput}</li>
         <li>Take out the trash</li>
         <li>Go to the Gym</li>
         <li>Study</li>
