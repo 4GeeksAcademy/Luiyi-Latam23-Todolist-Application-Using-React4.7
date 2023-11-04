@@ -54,22 +54,41 @@ h1 {
   border: 1px solid white;
   border-radius: 5px;
   outline: 3px;
-  outline-color: #280003;
+  outline-color: #b1ede846;
   outline-style: solid;
   outline-offset: -4px;
   background-color: #fffcf9;
-  color: white;
-  box-shadow: 5px 5px 0px 1px #8e6c88;
+  color: #280003;
+  box-shadow: 5px 5px 0px 1px #b1ede8;
+  cursor: pointer;
+}
+
+.form-input:hover {
+  outline-color: red;
+  outline-style: solid;
+  outline-offset: -3px;
+}
+
+.form-input::placeholder {
+  color: #8e6c8896;
+}
+
+ul {
+  padding: 0;
 }
 
 .items li {
-  display: flex;
+  /* display: flex; */
   justify-content: space-between;
+  list-style: none;
   border: 1px solid white;
   border-radius: 5px;
   padding: 1em 0.5em;
   margin: 0 0.5em 1.2em;
   font-weight: 500;
+  outline-color: #b1ede846;
+  outline-style: solid;
+  outline-offset: -4px;
   cursor: pointer;
   background-color: #fffcf9;
   user-select: none;
