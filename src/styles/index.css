@@ -1,17 +1,92 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap");
 
+/* Colors
+#fffcf9 -60
+#8e6c88 -30
+#b1ede8 -10
+#280003 Font
+*/
 *,
 *::before,
 *::after {
   margin: 0;
-  paddin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 body {
   font-family: "Poppins", sans-serif;
-  font-size: 1rem;
+  font-size: 1.3rem;
   line-height: 1.5;
-  color: #6067b6;
+  color: #280003;
   background-color: #64656530;
+}
+
+h1 {
+  font-weight: 500;
+  background-color: #8e6c88;
+  padding: 0.5em;
+  border-radius: 10px;
+  box-shadow: 4px 4px 0 #fffcf9;
+  color: #fffcf9;
+  pointer-events: none;
+  user-select: none;
+  text-align: center;
+}
+
+.container {
+  width: 50%;
+  min-width: 350px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 25px;
+  background-color: #fffcf9;
+  box-shadow: 5px 5px 3px 2px #8e6c88;
+}
+
+.form-input {
+  width: 100%;
+  font-size: 1.5rem;
+  margin-bottom: 1em;
+  padding: 0.5em;
+  border: 1px solid white;
+  border-radius: 5px;
+  outline: 3px;
+  outline-color: #280003;
+  outline-style: solid;
+  outline-offset: -4px;
+  background-color: #fffcf9;
+  color: white;
+  box-shadow: 5px 5px 0px 1px #8e6c88;
+}
+
+.items li {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 1em 0.5em;
+  margin: 0 0.5em 1.2em;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #fffcf9;
+  user-select: none;
+  box-shadow: 5px 2px 1px 1px #8e6c88;
+}
+
+.items li:hover {
+  background-color: #f3ede7;
+  color: #8e6c88;
+  outline-color: red;
+  outline-style: solid;
+  outline-offset: -3px;
+  box-shadow: none;
+}
+
+@media (max-width: 770px) {
+  .items li {
+    width: 100%;
+  }
 }
