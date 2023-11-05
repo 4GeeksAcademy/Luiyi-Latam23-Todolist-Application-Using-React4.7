@@ -15,9 +15,9 @@ export const Todos = (props) => {
   return (
     <div className="container">
       <div>
-        <h1>TODO'S LIST</h1>
+        <h1>TODO'S LIST!</h1>
       </div>
-      <form className="item-form">
+      <li className="item-form">
         <input
           value={props.inputValue}
           onChange={handleInputChange}
@@ -29,7 +29,7 @@ export const Todos = (props) => {
           placeholder="Enter Task!"
           autoComplete="off"
         />
-      </form>
+      </li>
       <ul className="items">
         {props.inputValue && <li>{props.inputValue}</li>}
       </ul>
