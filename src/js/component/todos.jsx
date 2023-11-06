@@ -10,8 +10,9 @@ export const Todos = () => {
         <h1>TODO'S LIST</h1>
       </div>
       <ul className="items">
-        <li className="input-li">
+        <div>
           <input
+            className="input-field"
             type="text"
             placeholder="Enter Task!"
             onChange={(e) => setInputValue(e.target.value)}
@@ -24,7 +25,7 @@ export const Todos = () => {
             }}
             autoComplete="off"
           />
-        </li>
+        </div>
         {tasks.map((item, index) => (
           <li
             key={index}
@@ -37,6 +38,7 @@ export const Todos = () => {
             {item}
           </li>
         ))}
+        <div className="task-counter">{tasks.length} tasks left</div>
       </ul>
     </div>
   );
