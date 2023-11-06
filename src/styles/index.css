@@ -108,6 +108,24 @@ ul {
   box-shadow: none;
 }
 
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em;
+}
+
+.delete-icon {
+  display: none;
+}
+
+.task:hover .delete-icon {
+  display: flex;
+  color: red;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
 @media (max-width: 600px) {
   .items li {
     width: 95%;

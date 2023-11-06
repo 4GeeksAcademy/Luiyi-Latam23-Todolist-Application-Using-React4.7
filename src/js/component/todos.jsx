@@ -29,6 +29,7 @@ export const Todos = () => {
         {tasks.map((item, index) => (
           <li
             key={index}
+            className="task"
             onClick={() =>
               setTasks(
                 tasks.filter((t, currentIndex) => index !== currentIndex)
@@ -36,6 +37,16 @@ export const Todos = () => {
             }
           >
             {item}
+            <span
+              className="delete-icon"
+              onClick={() =>
+                setTasks(
+                  tasks.filter((t, currentIndex) => index !== currentIndex)
+                )
+              }
+            >
+              &#10006;
+            </span>
           </li>
         ))}
         <div className="task-counter">{tasks.length} tasks left</div>
