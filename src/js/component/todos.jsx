@@ -4,6 +4,8 @@ export const Todos = () => {
   const [inputValue, setInputValue] = useState("");
   const [tasks, setTasks] = useState([]);
 
+  const remainingTasks = tasks.filter((task) => task.trim() !== "").length;
+
   return (
     <div className="container">
       <div>
@@ -26,30 +28,30 @@ export const Todos = () => {
             autoComplete="off"
           />
         </div>
-        {tasks.map((item, index) => (
-          <li
-            key={index}
-            className="task"
-            onClick={() =>
-              setTasks(
-                tasks.filter((t, currentIndex) => index !== currentIndex)
-              )
-            }
-          >
-            {item}
-            <span
-              className="delete-icon"
-              onClick={() =>
-                setTasks(
-                  tasks.filter((t, currentIndex) => index !== currentIndex)
-                )
-              }
-            >
-              &#10006;
-            </span>
-          </li>
-        ))}
-        <div className="task-counter">{tasks.length} tasks left</div>
+        {remainingTasks === 0 ? (
+          <div className="task-counter">No tasks, add a task!</div>
+        ) : (
+          tasks.map((item, index) => (
+            <li key={index} className="task">
+              {item}
+              <span
+                className="delete-icon"
+                onClick={() =>
+                  setTasks(
+                    tasks.filter((t, currentIndex) => index !== currentIndex)
+                  )
+                }
+              >
+                &#10006;
+              </span>
+            </li>
+          ))
+        )}
+        {remainingTasks > 0 && (
+          <div>
+            {remainingTasks} {remainingTasks === 1 ? "task" : "tasks"} left
+          </div>
+        )}
       </ul>
     </div>
   );
