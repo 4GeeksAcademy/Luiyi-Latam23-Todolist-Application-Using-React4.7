@@ -1,37 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 
-export const Todos = (props) => {
-  const handleInputChange = (event) => {
-    props.onChange(event.target.value);
-  };
-
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      props.onKeyPress(event.target.value);
-      props.onChange("");
-    }
-  };
+export const Todos = () => {
+  const [inputValue, setInputValue] = useState("");
+  const [tasks, setTasks] = useState([]);
 
   return (
     <div className="container">
       <div>
-        <h1>TODO'S LIST!</h1>
+        <h1>TODO'S LIST</h1>
       </div>
-      <li className="item-form">
-        <input
-          value={props.inputValue}
-          onChange={handleInputChange}
-          onKeyPress={handleKeyPress}
-          type="text"
-          className="form-input"
-          id="item-input"
-          name="item"
-          placeholder="Enter Task!"
-          autoComplete="off"
-        />
-      </li>
       <ul className="items">
-        {props.inputValue && <li>{props.inputValue}</li>}
+        <li className="input-li">
+          <input
+            type="text"
+            placeholder="Enter Task!"
+            onChange={(e) => setInputValue(e.target.value)}
+            value={inputValue}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && inputValue.trim() !== "") {
+                setTasks(tasks.concat([inputValue.trim()]));
+                setInputValue("");
+              }
+            }}
+            autoComplete="off"
+          />
+        </li>
+        {tasks.map((item, index) => (
+          <li
+            key={index}
+            onClick={() =>
+              setTasks(
+                tasks.filter((t, currentIndex) => index !== currentIndex)
+              )
+            }
+          >
+            {item}
+          </li>
+        ))}
       </ul>
     </div>
   );
