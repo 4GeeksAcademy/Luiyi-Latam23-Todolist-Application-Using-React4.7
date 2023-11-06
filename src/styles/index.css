@@ -122,8 +122,17 @@ ul {
 .task:hover .delete-icon {
   display: flex;
   color: red;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: bold;
+  /* outline-color: red;
+  outline-style: solid;
+  outline-offset: 5px; */
+}
+
+.task-counter {
+  color: red;
+  font-size: 1.5rem;
+  font-weight: 500;
 }
 
 @media (max-width: 600px) {
