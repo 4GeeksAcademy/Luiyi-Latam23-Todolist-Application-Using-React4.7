@@ -4,12 +4,27 @@ export const Todos = () => {
   const [inputValue, setInputValue] = useState("");
   const [tasks, setTasks] = useState([]);
 
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleEnterKey = (e) => {
+    if (e.key === "Enter" && inputValue.trim() !== "") {
+      setTasks(tasks.concat([inputValue.trim()]));
+      setInputValue("");
+    }
+  };
+
+  const handleDeleteTasks = (index) => {
+    setTasks(tasks.filter((t, currentIndex) => index !== currentIndex));
+  };
+
   const remainingTasks = tasks.filter((task) => task.trim() !== "").length;
 
   return (
     <div className="container">
       <div>
-        <h1>TODO'S LIST!!</h1>
+        <h1>TODO'S LIST</h1>
       </div>
       <ul className="items">
         <div>
@@ -17,14 +32,9 @@ export const Todos = () => {
             className="input-field"
             type="text"
             placeholder="Enter Task!"
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={handleInputChange}
             value={inputValue}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && inputValue.trim() !== "") {
-                setTasks(tasks.concat([inputValue.trim()]));
-                setInputValue("");
-              }
-            }}
+            onKeyDown={handleEnterKey}
             autoComplete="off"
           />
         </div>
@@ -36,11 +46,7 @@ export const Todos = () => {
               {item}
               <span
                 className="delete-icon"
-                onClick={() =>
-                  setTasks(
-                    tasks.filter((t, currentIndex) => index !== currentIndex)
-                  )
-                }
+                onClick={() => handleDeleteTasks(index)}
               >
                 &#10006;
               </span>
