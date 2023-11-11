@@ -11,23 +11,43 @@ export const Todos = () => {
       .then((data) => setApiData(data));
   }, []);
 
+  const syncWithApi = (updatedTasks) => {
+    fetch("https://playground.4geeks.com/apis/fake/todos/", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedTasks),
+    });
+  };
+
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
 
   const handleEnterKey = (e) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
-      setTasks(tasks.concat([inputValue.trim()]));
+      const newTask = inputValue.trim();
+      const updatedTasks = [...tasks, newTask];
+      setTasks(updatedTasks);
       setInputValue("");
+      syncWithApi(updatedTasks);
     }
   };
 
   const handleDeleteTasks = (index) => {
-    setTasks(tasks.filter((t, currentIndex) => index !== currentIndex));
+    const updatedTasks = tasks.filter(
+      (t, currentIndex) => index !== currentIndex
+    );
+    setTasks(updatedTasks);
+    syncWithApi(updatedTasks);
   };
 
-  const handleDeleteAll = (index) => {
-    setTasks(tasks.filter((t, currentIndex) => index === ""));
+  const handleDeleteAll = () => {
+    setTasks((prevTasks) => {
+      syncWithApi(prevTasks);
+      return [];
+    });
   };
 
   const remainingTasks = tasks.filter((task) => task.trim() !== "").length;
@@ -35,7 +55,7 @@ export const Todos = () => {
   return (
     <div className="container">
       <div>
-        <h1>TODO'S LIST!!</h1>
+        <h1>TODO'S LIST</h1>
       </div>
       <ul className="items">
         <div>
