@@ -19,12 +19,16 @@ export const Todos = () => {
     setTasks(tasks.filter((t, currentIndex) => index !== currentIndex));
   };
 
+  const handleDeleteAll = (index) => {
+    setTasks(tasks.filter((t, currentIndex) => index === ""));
+  };
+
   const remainingTasks = tasks.filter((task) => task.trim() !== "").length;
 
   return (
     <div className="container">
       <div>
-        <h1>TODO'S LIST</h1>
+        <h1>TODO'S LIST!!</h1>
       </div>
       <ul className="items">
         <div>
@@ -58,6 +62,9 @@ export const Todos = () => {
             {remainingTasks} {remainingTasks === 1 ? "task" : "tasks"} left
           </div>
         )}
+        <button className="btn btn-danger m-3" onClick={handleDeleteAll}>
+          Delete All
+        </button>
       </ul>
     </div>
   );
