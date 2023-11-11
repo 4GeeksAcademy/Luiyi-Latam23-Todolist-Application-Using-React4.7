@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export const Todos = () => {
   const [inputValue, setInputValue] = useState("");
   const [tasks, setTasks] = useState([]);
+  const [apiData, setApiData] = useState([]);
+
+  useEffect(() => {
+    fetch("https://playground.4geeks.com/apis/fake/todos/")
+      .then((response) => response.json())
+      .then((data) => setApiData(data));
+  }, []);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
