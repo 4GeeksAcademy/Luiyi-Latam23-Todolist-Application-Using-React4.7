@@ -6,19 +6,23 @@ export const Todos = () => {
   const [apiData, setApiData] = useState([]);
 
   useEffect(() => {
-    fetch("https://playground.4geeks.com/apis/fake/todos/")
+    fetch("https://playground.4geeks.com/apis/fake/todos/user/alesachezr")
       .then((response) => response.json())
-      .then((data) => setApiData(data));
+      .then((data) => setTasks(data.task || []))
+      .catch((error) => console.log(error));
   }, []);
 
   const syncWithApi = (updatedTasks) => {
-    fetch("https://playground.4geeks.com/apis/fake/todos/", {
+    fetch("https://playground.4geeks.com/apis/fake/todos/user/alesanchezr", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedTasks),
-    });
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
   };
 
   const handleInputChange = (e) => {
@@ -27,7 +31,7 @@ export const Todos = () => {
 
   const handleEnterKey = (e) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
-      const newTask = inputValue.trim();
+      const newTask = { label: inputValue.trim(), done: false };
       const updatedTasks = [...tasks, newTask];
       setTasks(updatedTasks);
       setInputValue("");
@@ -44,10 +48,18 @@ export const Todos = () => {
   };
 
   const handleDeleteAll = () => {
-    setTasks((prevTasks) => {
-      syncWithApi(prevTasks);
-      return [];
-    });
+    fetch("https://playground.4geeks.com/apis/fake/todos/user/alesanchezr", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setTasks([]);
+      })
+      .catch((error) => console.log(error));
   };
 
   const remainingTasks = tasks.filter((task) => task.trim() !== "").length;
@@ -74,7 +86,7 @@ export const Todos = () => {
         ) : (
           tasks.map((item, index) => (
             <li key={index} className="task">
-              {item}
+              {item.label}
               <span
                 className="delete-icon"
                 onClick={() => handleDeleteTasks(index)}
