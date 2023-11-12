@@ -6,14 +6,14 @@ export const Todos = () => {
   const [apiData, setApiData] = useState([]);
 
   useEffect(() => {
-    fetch("https://playground.4geeks.com/apis/fake/todos/user/alesachezr")
+    fetch("https://playground.4geeks.com/apis/fake/todos/user/luiyilatam23")
       .then((response) => response.json())
       .then((data) => setTasks(data.task || []))
       .catch((error) => console.log(error));
   }, []);
 
   const syncWithApi = (updatedTasks) => {
-    fetch("https://playground.4geeks.com/apis/fake/todos/user/alesanchezr", {
+    fetch("https://playground.4geeks.com/apis/fake/todos/user/luiyilatam23", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export const Todos = () => {
   };
 
   const handleDeleteAll = () => {
-    fetch("https://playground.4geeks.com/apis/fake/todos/user/alesanchezr", {
+    fetch("https://playground.4geeks.com/apis/fake/todos/user/luiyilatam23", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +62,9 @@ export const Todos = () => {
       .catch((error) => console.log(error));
   };
 
-  const remainingTasks = tasks.filter((task) => task.trim() !== "").length;
+  const remainingTasks = tasks.filter(
+    (task) => task.label && task.label.trim() !== ""
+  ).length;
 
   return (
     <div className="container">
