@@ -6,23 +6,38 @@ export const Todos = () => {
   const [apiData, setApiData] = useState([]);
 
   useEffect(() => {
-    fetch("https://playground.4geeks.com/apis/fake/todos/user/luiyilatam23")
-      .then((response) => response.json())
-      .then((data) => setTasks(data.task || []))
-      .catch((error) => console.log(error));
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://playground.4geeks.com/apis/fake/todos/user/luiyilatam23"
+        );
+        const data = await response.json();
+        setTasks(data.task || []);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const syncWithApi = (updatedTasks) => {
-    fetch("https://playground.4geeks.com/apis/fake/todos/user/luiyilatam23", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedTasks),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error));
+  const syncWithApi = async (updatedTasks) => {
+    try {
+      const response = await fetch(
+        "https://playground.4geeks.com/apis/fake/todos/user/luiyilatam23",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedTasks),
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -53,19 +68,23 @@ export const Todos = () => {
     syncWithApi(updatedTasks);
   };
 
-  const handleDeleteAll = () => {
-    fetch("https://playground.4geeks.com/apis/fake/todos/user/luiyilatam23", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setTasks([]);
-      })
-      .catch((error) => console.log(error));
+  const handleDeleteAll = async () => {
+    try {
+      const response = await fetch(
+        "https://playground.4geeks.com/apis/fake/todos/user/luiyilatam23",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      setTasks([]);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const remainingTasks = tasks.filter(
