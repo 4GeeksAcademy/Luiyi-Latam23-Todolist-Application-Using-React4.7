@@ -1,5 +1,24 @@
 import React, { useState, useEffect } from "react";
 
+const createUser = async () => {
+  try {
+    const response = await fetch(
+      "https://playground.4geeks.com/apis/fake/todos/user/Luiyilatam23",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify([]),
+      }
+    );
+    const data = await response.json();
+    console.log("User created:", data);
+  } catch (error) {
+    console.error("Error creating user", error);
+  }
+};
+
 export const Todos = () => {
   const [inputValue, setInputValue] = useState("");
   const [tasks, setTasks] = useState([]);
@@ -12,10 +31,19 @@ export const Todos = () => {
         const response = await fetch(
           "https://playground.4geeks.com/apis/fake/todos/user/Luiyilatam23"
         );
+
+        if (response.status === 404) {
+          console.log("user not found, creating a new one...");
+          await createUser();
+          return;
+        }
+
         const data = await response.json();
+        console.log("Fetched data", data);
+
         setTasks(data.task || []);
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching data", error);
       }
     };
 
@@ -35,10 +63,10 @@ export const Todos = () => {
         }
       );
       const data = await response.json();
-      console.log(data);
+      console.log("Synv with API response:", data);
       setErrorMessage("");
     } catch (error) {
-      console.log(error);
+      console.error("Error syncing with API:", error);
       setErrorMessage("Failed to sync with the server. Please try again.");
     }
   };
@@ -84,6 +112,9 @@ export const Todos = () => {
       );
       const data = await response.json();
       console.log(data);
+
+      await createUser();
+
       setTasks([]);
     } catch (error) {
       console.log(error);
