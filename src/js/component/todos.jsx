@@ -32,6 +32,12 @@ export const Todos = () => {
   const handleEnterKey = (e) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
       const newTask = { label: inputValue.trim(), done: false };
+
+      if (tasks.some((task) => task.label === newTask.label)) {
+        alert("Task already exists!!");
+        return;
+      }
+
       const updatedTasks = [...tasks, newTask];
       setTasks(updatedTasks);
       setInputValue("");
