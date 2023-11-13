@@ -10,7 +10,7 @@ export const Todos = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://playground.4geeks.com/apis/fake/todos/user/luiyilatam23"
+          "https://playground.4geeks.com/apis/fake/todos/user/Luiyilatam23"
         );
         const data = await response.json();
         setTasks(data.task || []);
@@ -25,7 +25,7 @@ export const Todos = () => {
   const syncWithApi = async (updatedTasks) => {
     try {
       const response = await fetch(
-        "https://playground.4geeks.com/apis/fake/todos/user/luiyilatam23",
+        "https://playground.4geeks.com/apis/fake/todos/user/Luiyilatam23",
         {
           method: "PUT",
           headers: {
@@ -74,7 +74,7 @@ export const Todos = () => {
   const handleDeleteAll = async () => {
     try {
       const response = await fetch(
-        "https://playground.4geeks.com/apis/fake/todos/user/luiyilatam23",
+        "https://playground.4geeks.com/apis/fake/todos/user/Luiyilatam23",
         {
           method: "DELETE",
           headers: {
