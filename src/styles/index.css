@@ -135,6 +135,11 @@ ul {
   font-weight: 500;
 }
 
+.error-message {
+  color: rgb(224, 89, 89);
+  font-weight: bold;
+}
+
 @media (max-width: 600px) {
   .items li {
     width: 95%;

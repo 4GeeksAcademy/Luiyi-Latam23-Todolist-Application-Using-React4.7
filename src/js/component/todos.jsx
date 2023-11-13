@@ -4,6 +4,7 @@ export const Todos = () => {
   const [inputValue, setInputValue] = useState("");
   const [tasks, setTasks] = useState([]);
   const [apiData, setApiData] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,8 +36,10 @@ export const Todos = () => {
       );
       const data = await response.json();
       console.log(data);
+      setErrorMessage("");
     } catch (error) {
       console.log(error);
+      setErrorMessage("Failed to sync with the server. Please try again.");
     }
   };
 
@@ -49,7 +52,7 @@ export const Todos = () => {
       const newTask = { label: inputValue.trim(), done: false };
 
       if (tasks.some((task) => task.label === newTask.label)) {
-        alert("Task already exists!!");
+        setErrorMessage("Task already exists!!");
         return;
       }
 
@@ -107,6 +110,9 @@ export const Todos = () => {
             onKeyDown={handleEnterKey}
             autoComplete="off"
           />
+        </div>
+        <div>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
         </div>
         {remainingTasks === 0 ? (
           <div className="task-counter">No tasks, add a task!</div>
