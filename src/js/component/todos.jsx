@@ -124,9 +124,8 @@ export const Todos = () => {
     }
   };
 
-  const remainingTasks = tasks.filter(
-    (task) => task.label && task.label.trim() !== ""
-  ).length;
+  const remainingTasks =
+    tasks.filter((task) => task.label && task.label.trim() !== "").length - 1;
 
   useEffect(() => {
     getTodos();
@@ -135,7 +134,7 @@ export const Todos = () => {
   return (
     <div className="container">
       <div>
-        <h1>TODO'S LIST!!</h1>
+        <h1>TODO'S LIST</h1>
       </div>
       <ul className="items">
         <div>
@@ -155,17 +154,20 @@ export const Todos = () => {
         {remainingTasks === 0 ? (
           <div className="task-counter">No tasks, add a task!</div>
         ) : (
-          tasks.map((item, index) => (
-            <li key={index} className="task">
-              {item.label}
-              <span
-                className="delete-icon"
-                onClick={() => handleDeleteTasks(index)}
-              >
-                &#10006;
-              </span>
-            </li>
-          ))
+          tasks.map(
+            (item, index) =>
+              item.label !== "example task" && (
+                <li key={index} className="task">
+                  {item.label}
+                  <span
+                    className="delete-icon"
+                    onClick={() => handleDeleteTasks(index)}
+                  >
+                    &#10006;
+                  </span>
+                </li>
+              )
+          )
         )}
         {remainingTasks > 0 && (
           <div>
