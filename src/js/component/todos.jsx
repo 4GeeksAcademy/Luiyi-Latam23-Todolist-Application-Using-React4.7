@@ -12,6 +12,7 @@ const createUser = async () => {
         body: JSON.stringify([]),
       }
     );
+
     const data = await response.json();
     console.log("User created:", data);
   } catch (error) {
@@ -22,33 +23,29 @@ const createUser = async () => {
 export const Todos = () => {
   const [inputValue, setInputValue] = useState("");
   const [tasks, setTasks] = useState([]);
-  const [apiData, setApiData] = useState([]);
+  // const [apiData, setApiData] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://playground.4geeks.com/apis/fake/todos/user/Luiyilatam23"
-        );
+  const getTodos = async () => {
+    try {
+      const response = await fetch(
+        "https://playground.4geeks.com/apis/fake/todos/user/Luiyilatam23"
+      );
 
-        if (response.status === 404) {
-          console.log("user not found, creating a new one...");
-          await createUser();
-          return;
-        }
-
-        const data = await response.json();
-        console.log("Fetched data", data);
-
-        setTasks(data.task || []);
-      } catch (error) {
-        console.error("Error fetching data", error);
+      if (response.status === 404) {
+        console.log("user not found, creating a new one...");
+        await createUser();
+        return;
       }
-    };
 
-    fetchData();
-  }, []);
+      const data = await response.json();
+      console.log("Fetched data", data);
+
+      setTasks(data || []);
+    } catch (error) {
+      console.error("Error fetching data", error);
+    }
+  };
 
   const syncWithApi = async (updatedTasks) => {
     try {
@@ -62,9 +59,14 @@ export const Todos = () => {
           body: JSON.stringify(updatedTasks),
         }
       );
+      if (response.status !== 200) {
+        return false;
+      }
+
       const data = await response.json();
       console.log("Synv with API response:", data);
       setErrorMessage("");
+      return true;
     } catch (error) {
       console.error("Error syncing with API:", error);
       setErrorMessage("Failed to sync with the server. Please try again.");
@@ -75,7 +77,7 @@ export const Todos = () => {
     setInputValue(e.target.value);
   };
 
-  const handleEnterKey = (e) => {
+  const handleEnterKey = async (e) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
       const newTask = { label: inputValue.trim(), done: false };
 
@@ -85,9 +87,11 @@ export const Todos = () => {
       }
 
       const updatedTasks = [...tasks, newTask];
-      setTasks(updatedTasks);
       setInputValue("");
-      syncWithApi(updatedTasks);
+      const updated = await syncWithApi(updatedTasks);
+      if (updated) {
+        await getTodos();
+      }
     }
   };
 
@@ -114,8 +118,7 @@ export const Todos = () => {
       console.log(data);
 
       await createUser();
-
-      setTasks([]);
+      await getTodos();
     } catch (error) {
       console.log(error);
     }
@@ -124,6 +127,10 @@ export const Todos = () => {
   const remainingTasks = tasks.filter(
     (task) => task.label && task.label.trim() !== ""
   ).length;
+
+  useEffect(() => {
+    getTodos();
+  }, []);
 
   return (
     <div className="container">
