@@ -23,7 +23,7 @@ const createUser = async () => {
 export const Todos = () => {
   const [inputValue, setInputValue] = useState("");
   const [tasks, setTasks] = useState([]);
-  // const [apiData, setApiData] = useState([]);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const getTodos = async () => {
@@ -95,12 +95,22 @@ export const Todos = () => {
     }
   };
 
-  const handleDeleteTasks = (index) => {
-    const updatedTasks = tasks.filter(
-      (t, currentIndex) => index !== currentIndex
-    );
-    setTasks(updatedTasks);
-    syncWithApi(updatedTasks);
+  const handleDeleteTasks = async (index) => {
+    try {
+      setIsDeleting(true);
+
+      const updatedTasks = tasks.filter(
+        (t, currentIndex) => index !== currentIndex
+      );
+      console.log("Updated tasks:", updatedTasks);
+      setTasks(updatedTasks);
+      await syncWithApi(updatedTasks);
+      await getTodos();
+    } catch (error) {
+      console.log("Error in handleDeleteTasks:", error);
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   const handleDeleteAll = async () => {
@@ -174,7 +184,11 @@ export const Todos = () => {
             {remainingTasks} {remainingTasks === 1 ? "task" : "tasks"} left
           </div>
         )}
-        <button className="btn btn-danger m-3" onClick={handleDeleteAll}>
+        <button
+          className="btn btn-danger m-3"
+          onClick={handleDeleteAll}
+          disabled={isDeleting}
+        >
           Delete All
         </button>
       </ul>
